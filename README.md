@@ -45,4 +45,13 @@ Huvec|H3k79me2AlnRep1|H3k79me2AlnRep1.bam|ControlStdAlnRep1.bam
 Huvec|H4k20me1StdAlnRep1|H4k20me1StdAlnRep1.bam|ControlStdAlnRep1.bam
 Huvec|Pol2bStdAlnRep1|Pol2bStdAlnRep1.bam|ControlStdAlnRep1.bam
 
+## ChromHMM
+
+Emission | Overlap | Transition 
+| --- | --- | ---
+![Image](/learnData/emissions_15.png) | ![Image](/learnData/Huvec_15_overlap.png) | ![Image](/learnData/transitions_15.png)
+
+RefSeqTSS | RefSeqTES 
+| --- | --- 
+![Image](/learnData/Huvec_15_RefSeqTSS_neighborhood.png) | ![Image](/learnData/Huvec_15_RefSeqTES_neighborhood.png)
 
