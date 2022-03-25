@@ -79,3 +79,50 @@ RefSeqTSS | RefSeqTES
 ## Часть 2
 
 ![Image](/images/part_2_2.png)
+
+## Команды
+### Создание файла cellmarkfiletable.txt
+```python
+import os
+arr = list()
+path = '/content/drive/MyDrive/bionformatica/'
+control = 'ControlStdAlnRep1.bam'
+cell_type = 'Huvec'
+with open(f'{path}cellmarkfiletable.txt', 'a') as the_file:
+  for file in os.listdir(path):
+    if file[-3:]=='bam' and not file.startswith('Control'):
+      s = f'{cell_type}\t{file.split(".")[0]}\t{file}\t{control}\n'
+      the_file.write(s)
+```
+### Binarize Bam
+```python
+!java -mx5000M -jar /content/drive/MyDrive/bionformatica/ChromHMM/ChromHMM.jar \
+ BinarizeBam -b 200  /content/drive/MyDrive/bionformatica/ChromHMM/CHROMSIZES/hg19.txt \
+ /content/drive/MyDrive/bionformatica/\
+  /content/drive/MyDrive/bionformatica/cellmarkfiletable.txt  \
+   /content/drive/MyDrive/bionformatica/binarizedData
+```
+### Learn Module
+```python
+!java -mx5000M -jar /content/drive/MyDrive/bionformatica/ChromHMM/ChromHMM.jar \
+LearnModel  -b 200 \
+/content/drive/MyDrive/bionformatica/binarizedData/\
+ /content/drive/MyDrive/bionformatica/learnData 15 hg19
+```
+### Part 2
+```python
+types = ['Heterochromatin', 'Repressed', 'Transcribed', 'Transcribed', 'Heterochromatin', 'Repressed', 'Repressed', 'Enhancer',
+         'Promoter', 'Enhancer', 'Enhancer', 'Enhancer', 'Enhancer', 'Enhancer', 'Transcribed']
+with open(f'/content/drive/MyDrive/bionformatica/learnData/Huvec_15_dense.bed', 'r') as f:
+  with open(f'/content/drive/MyDrive/bionformatica/learnData/Huvec_15_dense_new.bed', 'a') as f_new:
+    lines = f.readlines()
+    flag = True
+    for line in lines:
+      if flag:
+        flag = False
+        f_new.write(line)
+      else:
+        arr = line.split('\t')
+        arr[3] = arr[3]+'_'+types[int(arr[3])-1]
+        f_new.write('\t'.join(arr))
+```
