@@ -78,4 +78,4 @@ RefSeqTSS | RefSeqTES
 
 ## Часть 2
 
-![Image](/images/part_2.png)
+![Image](/images/part_2_2.png)
